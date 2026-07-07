@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eroshz - Gelen Mesajlar</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        display: block !important;
+        padding: 30px 20px;
+        max-width: 900px;
+        margin: 0 auto !important;
+      }
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #09080e;
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+      }
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(109, 40, 217, 0.1);
+        border-top-color: #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s infinite linear;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .msg-card {
+        background: #0f0e17;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .msg-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+    <script>
+      if (sessionStorage.getItem("adminAuth") !== "true") {
+        window.location.href = "admin.html";
+      }
+    </script>
+
+    <header
+      style="
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        align-items: center;
+      "
+    >
+      <h2>
+        <i class="fa-solid fa-envelope" style="color: #3b82f6"></i> İletişim
+        Formu Mesajları
+      </h2>
+      <a
+        href="admin.html"
+        onclick="showLoader(event)"
+        style="color: #fff; text-decoration: none"
+        ><i class="fa-solid fa-arrow-left"></i> Geri Dön</a
+      >
+    </header>
+
+    <div id="messagesContainer"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          document.getElementById("loadingOverlay").style.opacity = "0";
+          setTimeout(
+            () =>
+              (document.getElementById("loadingOverlay").style.display =
+                "none"),
+            300
+          );
+        }, 300);
+        renderMessages();
+      });
+
+      function showLoader(e) {
+        e.preventDefault();
+        const dest = e.currentTarget.getAttribute("href");
+        document.getElementById("loadingOverlay").style.display = "flex";
+        document.getElementById("loadingOverlay").style.opacity = "1";
+        setTimeout(() => (window.location.href = dest), 300);
+      }
+
+      function renderMessages() {
+        const messages =
+          JSON.parse(localStorage.getItem("contactMessages")) || [];
+        const container = document.getElementById("messagesContainer");
+        container.innerHTML =
+          messages.length === 0
+            ? '<p style="color:#6b7280; text-align:center;">Gelen mesaj bulunmuyor.</p>'
+            : "";
+
+        messages.forEach((m) => {
+          container.innerHTML += `
+                    <div class="msg-card">
+                        <div class="msg-header">
+                            <span><b>${m.name}</b> (${m.email})</span>
+                            <span>${m.date || ""}</span>
+                        </div>
+                        <div style="color:#d1d5db; margin-top:10px; font-size:0.95rem;">"${
+                          m.message
+                        }"</div>
+                        <div style="text-align:right; margin-top:10px;">
+                            <button onclick="deleteMessage('${
+                              m.id
+                            }')" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Sil</button>
+                        </div>
+                    </div>`;
+        });
+      }
+
+      function deleteMessage(id) {
+        if (confirm("Mesaj silinsin mi?")) {
+          let messages =
+            JSON.parse(localStorage.getItem("contactMessages")) || [];
+          localStorage.setItem(
+            "contactMessages",
+            JSON.stringify(messages.filter((m) => m.id !== id))
+          );
+          renderMessages();
+        }
+      }
+    </script>
+  </body>
+</html>
