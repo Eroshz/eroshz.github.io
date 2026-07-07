@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eroshz Portfolyo</title>
+    <title>Eroshz.</title>
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
@@ -13,26 +13,117 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <style>
+      #page-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #09080e;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.4s;
+      }
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(109, 40, 217, 0.1);
+        border-top-color: #a78bfa;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .footer-social {
+        margin-top: 60px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      .footer-social p {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+      .footer-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .contact-page-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(109, 40, 217, 0.1);
+        border: 1px solid rgba(109, 40, 217, 0.3);
+        padding: 10px 24px;
+        border-radius: 30px;
+        color: #c084fc;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      .contact-page-btn:hover {
+        background: #6d28d9;
+        color: #fff;
+        border-color: #6d28d9;
+      }
+      .blog-redirect-btn {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #34d399;
+      }
+      .blog-redirect-btn:hover {
+        background: #10b981;
+        color: #fff;
+        border-color: #10b981;
+      }
+    </style>
   </head>
   <body>
+    <div id="page-loader"><div class="spinner"></div></div>
     <div class="glow-orb"></div>
 
-    <a href="admin.html" class="admin-panel-gate" title="Yönetim Paneli">
-      <i class="fa-solid fa-sliders"></i>
-    </a>
+    <a href="admin.html" class="admin-panel-gate" title="Yönetim Paneli"
+      ><i class="fa-solid fa-sliders"></i
+    ></a>
 
     <div class="main-wrapper">
       <header class="hero-section">
-        <h1 class="brand-title">Eroshz</h1>
-        <p class="brand-subtitle">Dijital Laboratuvar & Projeler</p>
+        <h1 class="brand-title">Eroshz.</h1>
+        <p class="brand-subtitle">Web developer</p>
       </header>
 
       <main class="grid-container" id="profileList"></main>
+
+      <footer class="footer-social">
+        <p></p>
+        <div class="footer-buttons">
+          <a href="iletisim.html" class="contact-page-btn"
+            ><i class="fa-solid fa-envelope"></i> Mesaj Bırakın</a
+        </div>
+      </footer>
     </div>
 
     <script>
-      // Tıklama sayısını artıran fonksiyon
-      function trackClick(siteId, url) {
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("page-loader");
+        loader.style.opacity = "0";
+        setTimeout(() => (loader.style.display = "none"), 400);
+      });
+
+      function trackClick(siteId) {
         let customSites = JSON.parse(localStorage.getItem("customSites")) || [];
         if (Array.isArray(customSites)) {
           customSites = customSites.map((site) => {
@@ -48,31 +139,27 @@
       function renderSites() {
         const allSites = JSON.parse(localStorage.getItem("customSites")) || [];
         const listEl = document.getElementById("profileList");
-
         if (allSites.length === 0) {
-          listEl.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-layer-group"></i>
-                        <p>Henüz bir proje eklenmedi.</p>
-                    </div>`;
+          listEl.innerHTML = `<div class="empty-state"><i class="fa-solid fa-layer-group"></i><p>Henüz proje yok.</p></div>`;
           return;
         }
-
         listEl.innerHTML = "";
         allSites.forEach((site) => {
           listEl.innerHTML += `
-                    <a href="${site.url}" target="_blank" onclick="trackClick('${site.id}')" class="project-card" style="--accent-color: ${site.color}">
-                        <div class="icon-wrapper">
-                            <i class="fa-solid ${site.icon}"></i>
-                        </div>
-                        <div class="card-info">
-                            <h3>${site.name}</h3>
-                        </div>
-                    </a>
-                `;
+                    <a href="${
+                      site.url
+                    }" target="_blank" onclick="trackClick('${
+            site.id
+          }')" class="project-card" style="--accent-color: ${site.color}">
+                        <div class="icon-wrapper"><i class="fa-solid ${
+                          site.icon
+                        }"></i></div>
+                        <div class="card-info"><h3>${site.name}</h3>${
+            site.desc ? `<p>${site.desc}</p>` : ""
+          }</div>
+                    </a>`;
         });
       }
-
       document.addEventListener("DOMContentLoaded", renderSites);
     </script>
   </body>
