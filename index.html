@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eroshz Portfolyo</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="glow-orb"></div>
+
+    <a href="admin.html" class="admin-panel-gate" title="Yönetim Paneli">
+      <i class="fa-solid fa-sliders"></i>
+    </a>
+
+    <div class="main-wrapper">
+      <header class="hero-section">
+        <h1 class="brand-title">Eroshz</h1>
+        <p class="brand-subtitle">Dijital Laboratuvar & Projeler</p>
+      </header>
+
+      <main class="grid-container" id="profileList"></main>
+    </div>
+
+    <script>
+      // Tıklama sayısını artıran fonksiyon
+      function trackClick(siteId, url) {
+        let customSites = JSON.parse(localStorage.getItem("customSites")) || [];
+        if (Array.isArray(customSites)) {
+          customSites = customSites.map((site) => {
+            if (site.id === siteId) {
+              site.clicks = (site.clicks || 0) + 1;
+            }
+            return site;
+          });
+          localStorage.setItem("customSites", JSON.stringify(customSites));
+        }
+      }
+
+      function renderSites() {
+        const allSites = JSON.parse(localStorage.getItem("customSites")) || [];
+        const listEl = document.getElementById("profileList");
+
+        if (allSites.length === 0) {
+          listEl.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <p>Henüz bir proje eklenmedi.</p>
+                    </div>`;
+          return;
+        }
+
+        listEl.innerHTML = "";
+        allSites.forEach((site) => {
+          listEl.innerHTML += `
+                    <a href="${site.url}" target="_blank" onclick="trackClick('${site.id}')" class="project-card" style="--accent-color: ${site.color}">
+                        <div class="icon-wrapper">
+                            <i class="fa-solid ${site.icon}"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>${site.name}</h3>
+                        </div>
+                    </a>
+                `;
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", renderSites);
+    </script>
+  </body>
+</html>

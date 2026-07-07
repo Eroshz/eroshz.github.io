@@ -1,0 +1,253 @@
+/* MOR & SİYAH MİNİMALİST TASARIM SİSTEMİ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  background-color: #08070d; /* Derin Siyah-Mor Taban */
+  color: #f3f4f6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.d-none {
+  display: none !important;
+}
+
+/* SADE MOR AMBİYANS IŞIĞI */
+.glow-orb {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: #6d28d9; /* Saf Mor Neon */
+  border-radius: 50%;
+  filter: blur(160px);
+  z-index: 0;
+  opacity: 0.12;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* PANEL GEÇİŞ İKONU */
+.admin-panel-gate {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+.admin-panel-gate:hover {
+  color: #a78bfa;
+  border-color: #6d28d9;
+  background: rgba(109, 40, 217, 0.1);
+  box-shadow: 0 0 15px rgba(109, 40, 217, 0.3);
+}
+
+/* ANA VİTRİN YAPISI */
+.main-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  padding: 40px 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.hero-section {
+  margin-bottom: 50px;
+  animation: slideDown 0.5s ease;
+}
+
+.brand-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  background: linear-gradient(to right, #fff, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+/* SADELEŞTİRİLMİŞ PROJE KARTLARI */
+.grid-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background: #0f0e17; /* Saf Siyah-Gece Grisi Kartlar */
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 20px 24px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 260px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: rgba(109, 40, 217, 0.08);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  color: var(--accent-color, #a78bfa);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(109, 40, 217, 0.15);
+}
+
+.card-info {
+  text-align: left;
+}
+
+.card-info h3 {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.visit-link {
+  font-size: 0.8rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.3s ease;
+}
+
+/* HOVER AKSİYONLARI */
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: #6d28d9;
+  background: #13111c;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(109, 40, 217, 0.1);
+}
+
+.project-card:hover .icon-wrapper {
+  background: #6d28d9;
+  color: #fff;
+  box-shadow: 0 0 15px #6d28d9;
+}
+
+.project-card:hover .visit-link {
+  color: #c084fc;
+}
+
+/* ADMIN PANEL VE LOGIN İÇİN UYUMLULUK */
+.auth-container,
+.panel-container {
+  z-index: 10;
+  animation: fadeIn 0.4s ease;
+}
+
+.modern-card {
+  background: #0f0e17;
+  border: 1px solid rgba(109, 40, 217, 0.15);
+  border-radius: 20px;
+  padding: 35px;
+}
+
+.auth-header i,
+.text-neon {
+  color: #a78bfa;
+  text-shadow: 0 0 15px rgba(109, 40, 217, 0.4);
+}
+
+.input-wrapper-modern input,
+.modern-field input,
+.modern-field select {
+  background: #09080e;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.input-wrapper-modern input:focus,
+.modern-field input:focus,
+.modern-field select:focus {
+  border-color: #6d28d9;
+  box-shadow: 0 0 10px rgba(109, 40, 217, 0.2);
+}
+
+.action-btn {
+  background: #6d28d9;
+  color: #fff;
+  border-radius: 10px;
+}
+.action-btn:hover {
+  background: #7c3aed;
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.4);
+}
+
+.modern-delete-item {
+  background: #09080e;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.exit-btn:hover {
+  color: #ff4b4b;
+  border-color: rgba(255, 75, 75, 0.2);
+}
+
+/* ANİMASYONLAR */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-title {
+    font-size: 2.5rem;
+  }
+  .project-card {
+    width: 100%;
+  }
+}
