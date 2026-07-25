@@ -1,0 +1,6 @@
+{
+  "name": "Eroshz Portfolio",
+  "description": "Sade, minimalist ve modern yazılımcı portfolyo web sitesi. Projelerinizi ve hakkımda metnini yönetebileceğiniz gelişmiş admin paneli, iletişim formu ve Supabase/Local persistence desteği içerir.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
